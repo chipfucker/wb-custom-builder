@@ -1,2 +1,0 @@
-from aseprite import Sprite
-
