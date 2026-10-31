@@ -1,41 +1,71 @@
 [sprite]
+; centerpoint of all character's main body sprites
 origin_x="80.00"
 origin_y="84.00"
+; centerpoint of character's cowgirl sprites
 cowgirl_origin_x="80.00"
 cowgirl_origin_y="84.00"
 
 [portrait]
+; centerpoint of portrait sprites
 origin_x="64.00"
 origin_y="64.00"
 
 [condom]
+; y offset of condom sprites per-position
 condom_y_mpress = "0.00"
 condom_y_cowgirls = "0.00"
 
 [stats]
+; max amount of orgasms
 max_orgasms="5"
+; scalar size of proportions
 top_boob_size="1.0"
 top_ass_size="1.0"
 top_penis_length="1.0"
 top_penis_width="1.0"
 ball_size="1.0"
+; scalar chance of impregnating per-pump
 virility_modifier="1.0"
+; scalar amount of cum volume
 cum_volume_modifier="1.0"
+; scalar distance between back and forth when thrusting
 stroke_depth="1.0"
+; scalar speed of thrusting
 stroke_speed="1.0"
+; time between final thrust and first pump in frames
 pump_delay="90"
 
-[pills]
+[pills] ; all exclusive, all boolean
+; disables impregnation and changes dialogue to reflect that of using a
+;   condom
 contraceptive_pill="0"
+; increases ball size and makes sperm larger in impregnation animation
 mega_sperm_pill="0"
+; enables horse penis
 equine_pill="0"
+; enables knotted penis
 knotted_pill="0"
+; (equine and knotted synergize)
+; increases ass size
 extra_thick_pill="0"
+; grants diphallia, doubles max orgasms, and makes each orgasm count as two
 diphallia_pill="0"
+; makes partner create new eggs upon all eggs being fertilized
 ovulation_pill="0"
+; increases amount of thrusts per orgasm
 stamina_pill="0"
+; adds random chance to shoot cum throughout sex pre-orgasm
 leaky_pill="0"
+; greatly increases size of all attributes and cum volume
 hyper_breeding_pill="0"
 
 [penis]
+; enum of default penis type
 penis_type_index="0"
+; 0 = human
+; 1 = knotted
+; 2 = equine
+; 3 = knotted + equine
+; note that pills can substitute this value, and that this value can be changed
+;   in character settings; this only defines the initial, default type

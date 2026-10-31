@@ -1,20 +1,33 @@
 meta:
-  name: Example  # info.name
-  description: >  # info.desc
+  name: Example
+  description: >-
     A template you may use to create your own custom lover!
-  author: YOUR NAME HERE  # info.author
+  author: YOUR NAME HERE
+
+customMoans: true
 
 body:
   origin:
     overall: {x: 80, y: 84}
-  bulgeSize: {width: 1, height: 1}
+    cowgirl: {x: 80, y: 84}
+  scale:
+    boobs: 1
+    ass: 1
+    penis: {length: 1, width: 1}
+    bulge: {length: 1, width: 1}
+    balls: 1
   boobs:
     heavy: false
     flat: false
     lactating: false
   condom:
     originY: 78
-    standingOriginY: 0
+    standingOffsetY: 0
+    matingPressOffsetY: 0
+    cowgirlOffsetY: 0
+  penis:
+    knotted: false
+    equine: false
 
 xray:
   origin: {x: 80, y: 84}
@@ -33,6 +46,20 @@ colors:
 stats:
   maxOrgasms: 5
   maxPumps: 30
+  virility: 1
+  cumVolume: 1
+  thrustSpeed: 1
+  thrustLength: 1
+  cumDelay: 90
 
-audio:
-  customMoans: true
+pills:
+  contraceptive: false
+  megaSperm: false
+  equine: false
+  knotted: false
+  extraThick: false
+  diphallia: false
+  ovulation: false
+  stamina: false
+  leaky: false
+  hyperBreeding: false
