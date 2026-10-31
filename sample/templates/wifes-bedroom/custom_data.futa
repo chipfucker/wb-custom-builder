@@ -1,31 +1,48 @@
 [sprite]
+; centerpoint of all character's main body sprites
 origin_x="80.000000"
 origin_y="84.000000"
+; default centerpoint y of condom sprite
 condom_y="78.000000"
+; centerpoint of xray sprites
 xray_x="80.000000"
 xray_y="84.000000"
+; scalar size of bulge
 bulge_width="1.00000"
 bulge_height="1.00000"
+; changes boob jiggle physics (boolean)
 heavy_boobs="0.00000"
+; affects condom position for standing body sprites; unsure how exactly
 standing_condom_y="0.00000"
 [portrait]
+; centerpoint of portrait sprites
 origin_x="64.000000"
 origin_y="64.000000"
+; vertical offset of head hitbox
 head_offset="0.000000"
+; position of nipples relative to center, one nipple on a flipped x axis
 nipple_x="28.000000"
 nipple_y="56.000000"
+; scalar size of nipples
 nipple_size="1.0"
 [stats]
+; max amount of orgasms
 max_orgasms="5.000000"
+; max amount of pumps throughout orgasm
 max_pumps="30.000000"
+; whether to use custom moan SFX or fall back to default (boolean)
 default_moans="0.000000"
+; cum color
 cum_r="255.000000"
 cum_g="244.000000"
 cum_b="205.000000"
+; condom color
 condom_r="255.000000"
 condom_g="255.000000"
 condom_b="255.000000"
+; whether boobs emit milk particles when interacted with (boolean)
 lactate="0.000000"
+; whether boobs are registered with physics at all (boolean)
 flat="0.000000"
 [info]
 name="Example"

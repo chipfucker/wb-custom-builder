@@ -1,0 +1,38 @@
+meta:
+  name: Example  # info.name
+  description: >  # info.desc
+    A template you may use to create your own custom lover!
+  author: YOUR NAME HERE  # info.author
+
+body:
+  origin:
+    overall: {x: 80, y: 84}
+  bulgeSize: {width: 1, height: 1}
+  boobs:
+    heavy: false
+    flat: false
+    lactating: false
+  condom:
+    originY: 78
+    standingOriginY: 0
+
+xray:
+  origin: {x: 80, y: 84}
+
+portrait:
+  origin: {x: 64, y: 64}
+  headOffset: 0
+  nipples:
+    position: {x: 28, y: 56}
+    size: 1
+
+colors:
+  cum: "#FFF4CD"
+  condom: "#FFFFFF"
+
+stats:
+  maxOrgasms: 5
+  maxPumps: 30
+
+audio:
+  customMoans: true
