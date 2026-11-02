@@ -1,0 +1,10 @@
+[info]
+name = IStole Zoologist
+desc = Lover inspired by IStole's Zoologist Beat Banger animations
+author = @chiptumor
+
+[sprite]
+origin_x = 80
+origin_y = 84
+condom_y = 78
+

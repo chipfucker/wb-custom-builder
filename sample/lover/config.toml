@@ -1,65 +1,69 @@
+[config]
+output_dir.vanilla = "../output/vanilla-lover/"
+output_dir."Deeproom" = "../output/deeproom-lover/"
+
 [meta]
-name = "Example"
-description = "A template you may use to create your own custom lover!"
-author = "YOUR NAME HERE"
-customMoans = true
+name = "IStole Zoologist"  # [V] info.name
+description = "Lover inspired by IStole's Zoologist Beat Banger animations"  # [V] info.desc
+author = "@chiptumor"  # [V] info.author
+custom_moans = false  # [V] !stats.default_moans
 
 [body.origin]
-overall = {x=80, y=84}
-cowgirl = {x=80, y=84}
+overall = {x=80, y=84}  # sprite.origin_{k}
+cowgirl = {x=80, y=84}  # [D] sprite.cowgirl_origin_{k}
 
 [body.scale]
-boobs = 1
-ass = 1
-penis = {length=1, width=1}
-bulge = {length=1, width=1}
-balls = 1
+boobs = 1  # [D] stats.top_boob_size
+ass = 1  # [D] stats.top_ass_size
+penis = {length=1, width=1}  # [D] stats.top_penis_{k}
+bulge = {length=1, width=1}  # [V] sprite.bulge_{k == "length" ? "height" : k}
+balls = 1  # [D] stats.ball_size
 
 [body.boobs]
-heavy = false
-flat = false
-lactating = false
+heavy = false  # [V] sprite.heavy_boobs
+flat = false  # [V] stats.flat
+lactating = false  # [V] stats.lactate
 
 [body.condom]
-originY = 78
-standingOffsetY = 0
-matingPressOffsetY = 0
-cowgirlOffsetY = 0
+origin_y = 78  # [V] sprite.condom_y
+standing_offset_y = 0  # [V] sprite.standing_condom_y
+mating_press_offset_y = 0  # [D] condom.condom_y_mpress
+cowgirl_offset_y = 0  # [D] condom.condom_y_cowgirls
 
-[body.penis]
-knotted = false
-equine = false
+[body.penis]  # [D] penis.penis_type_index
+knotted = true  # +1
+equine = false  # +2
 
 [xray]
-origin = {x=80, y=84}
+origin = {x=80, y=84}  # [V] sprite.xray_{k}
 
 [portrait]
-origin = {x=64, y=64}
-headOffset = 0
-nipples.position = {x=28, y=56}
-nipples.size = 1
+origin = {x=64, y=64}  # portrait.origin_{k}
+head_offset = 0  # [V] portrait.head_offset
+nipples.position = {x=28, y=56}  # [V] portrait.nipple_{k}
+nipples.size = 1  # [V] portrait.nipple_size
 
 [colors]
-cum = "#FFF4CD"
-condom = "#FFFFFF"
+cum = "#FFF4CD"  # [V] stats.cum_{r|g|b}
+condom = "#F3C1A7"  # [V] stats.condom_{r|g|b}
 
 [stats]
-maxOrgasms = 5
-maxPumps = 30
-virility = 1
-cumVolume = 1
-thrustSpeed = 1
-thrustLength = 1
-cumDelay = 90
+max_orgasms = 10  # stats.max_orgasms
+max_pumps = 50  # [V] stats.max_pumps
+virility = 3.5  # [D] stats.virility_modifier
+cum_volume = 4.50  # [D] stats.cum_volume_modifier
+thrust_speed = 1.4  # [D] stats.stroke_speed
+thrust_strength = 1.1  # [D] stats.stroke_depth
+cum_delay = 1.25  # [D] stats.pump_delay * 60
 
 [pills]
-contraceptive = false
-megaSperm = false
-equine = false
-knotted = false
-extraThick = false
-diphallia = false
-ovulation = false
-stamina = false
-leaky = false
-hyperBreeding = false
+contraceptive = false  # [D] pills.contraceptive_pill
+mega_sperm = false  # [D] pills.mega_sperm_pill
+equine = false  # [D] pills.equine_pill
+knotted = false  # [D] pills.knotted_pill
+extra_thick = false  # [D] pills.extra_thick_pill
+diphallia = false  # [D] pills.diphallia_pill
+ovulation = false  # [D] pills.ovulation_pill
+stamina = false  # [D] pills.stamina_pill
+leaky = false  # [D] pills.leaky_pill
+hyper_breeding = false  # [D] pills.hyper_breeding_pill
