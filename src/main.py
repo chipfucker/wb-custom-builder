@@ -3,20 +3,24 @@ INPUT_PATH = "./sample/lover/"
 from pathlib import Path
 import tomllib
 from configparser import ConfigParser
-# from aseprite import Sprite
+from aseprite import Sprite
+from pillow import Image
 
-EXPECTED_FILENAME = "config.toml"
 DIR = Path(__file__).resolve().parent.parent
+FILENAME_SEPARATOR = "_"
+
+def filename(name: str) -> str:
+  return FILENAME_SEPARATOR.join(name.split(" "))
 
 input_path = DIR / INPUT_PATH
 default_path = DIR / "./src/default/"
 
-with open(input_path / EXPECTED_FILENAME, "rb") as file:
+with open(input_path / "config.toml", "rb") as file:
   config = tomllib.load(file)
 with open(default_path / "lover/config.toml", "rb") as file:
   default = tomllib.load(file)
 
-def stringify(value) -> str:  
+def stringify(value) -> str:
   match value:
     case str():
       return f'"{value.replace('"', '\\"')}"'
@@ -37,8 +41,7 @@ def get(*path: *tuple[str, *tuple[str | int, ...]]) -> str:
     return dig(default, path)
 
 def output_ini(key: str) -> None:
-  output_path = (input_path / EXPECTED_FILENAME
-                 / config["config"]["output_dir"][key]
+  output_path = (input_path / config["config"]["output_dir"][key]
                 ).resolve()
   output_path.mkdir(parents=True, exist_ok=True)
   with open(output_path / "custom_data.futa", "w") as output_file:
@@ -84,7 +87,7 @@ ini["portrait"] = {
 ini["stats"] = {
   "max_orgasms": get("stats", "max_orgasms"),
   "max_pumps": get("stats", "max_pumps"),
-  "default_moans": "0" if get("meta", "custom_moans") else "1",
+  "default_moans": "0" if config["meta"]["custom_moans"] else "1",
   "cum_r": cum_r,
   "cum_g": cum_g,
   "cum_b": cum_b,
@@ -96,6 +99,9 @@ ini["stats"] = {
 }
 
 output_ini("vanilla")
+
+ase = Sprite.open(input_path / filename("mating press.aseprite"))
+# CONTINUE
 
 #region ---Deeproom---
 

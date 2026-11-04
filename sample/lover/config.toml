@@ -1,6 +1,6 @@
 [config]
-output_dir.vanilla = "../output/vanilla-lover/"
-output_dir."Deeproom" = "../output/deeproom-lover/"
+output_dir.vanilla = "./output/vanilla-lover/"
+output_dir."Deeproom" = "./output/deeproom-lover/"
 
 [meta]
 name = "IStole Zoologist"
