@@ -1,3 +1,6 @@
+# [V] = vanilla exclusive
+# [D] = Deeproom exclusive
+
 [config]
 output_dir.vanilla = "../output/vanilla-lover/"
 output_dir."Deeproom" = "../output/deeproom-lover/"
@@ -6,17 +9,17 @@ output_dir."Deeproom" = "../output/deeproom-lover/"
 name = "Example"  # [V] info.name
 description = "A template you may use to create your own custom lover!"  # [V] info.desc
 author = "Aplove"  # [V] info.author
-custom_moans = true  # [V] !stats.default_moans
+custom_moans = true  # [V] opposite of stats.default_moans
 
 [body.origin]
-overall = {x=80, y=84}  # sprite.origin_{k}
-cowgirl = {x=80, y=84}  # [D] sprite.cowgirl_origin_{k}
+overall = {x=80, y=84}  # sprite.origin_x / y
+cowgirl = {x=80, y=84}  # [D] sprite.cowgirl_origin_x / y
 
 [body.scale]
 boobs = 1  # [D] stats.top_boob_size
 ass = 1  # [D] stats.top_ass_size
-penis = {length=1, width=1}  # [D] stats.top_penis_{k}
-bulge = {length=1, width=1}  # [V] sprite.bulge_{k == "length" ? "height" : k}
+penis = {length=1, width=1}  # [D] stats.top_penis_length / width
+bulge = {length=1, width=1}  # [V] sprite.bulge_length / height
 balls = 1  # [D] stats.ball_size
 
 [body.boobs]
@@ -35,17 +38,17 @@ knotted = false  # +1
 equine = false  # +2
 
 [xray]
-origin = {x=80, y=84}  # [V] sprite.xray_{k}
+origin = {x=80, y=84}  # [V] sprite.xray_x / y
 
 [portrait]
-origin = {x=64, y=64}  # portrait.origin_{k}
+origin = {x=64, y=64}  # portrait.origin_x / y
 head_offset = 0  # [V] portrait.head_offset
-nipples.position = {x=28, y=56}  # [V] portrait.nipple_{k}
+nipples.position = {x=28, y=56}  # [V] portrait.nipple_x / y
 nipples.size = 1  # [V] portrait.nipple_size
 
 [colors]
-cum = "#FFF4CD"  # [V] stats.cum_{r|g|b}
-condom = "#FFFFFF"  # [V] stats.condom_{r|g|b}
+cum = "#FFF4CD"  # [V] stats.cum_r / g / b
+condom = "#FFFFFF"  # [V] stats.condom_r / g / b
 
 [stats]
 max_orgasms = 5  # stats.max_orgasms
@@ -54,7 +57,7 @@ virility = 1  # [D] stats.virility_modifier
 cum_volume = 1  # [D] stats.cum_volume_modifier
 thrust_speed = 1  # [D] stats.stroke_speed
 thrust_strength = 1  # [D] stats.stroke_depth
-pump_delay = 1.5  # [D] stats.pump_delay * 60
+pump_delay = 1.5  # [D] * 60 = stats.pump_delay
 
 [pills]
 contraceptive = false  # [D] pills.contraceptive_pill
