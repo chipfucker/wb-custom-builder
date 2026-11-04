@@ -54,7 +54,7 @@ virility = 1  # [D] stats.virility_modifier
 cum_volume = 1  # [D] stats.cum_volume_modifier
 thrust_speed = 1  # [D] stats.stroke_speed
 thrust_strength = 1  # [D] stats.stroke_depth
-cum_delay = 1.5  # [D] stats.pump_delay * 60
+pump_delay = 1.5  # [D] stats.pump_delay * 60
 
 [pills]
 contraceptive = false  # [D] pills.contraceptive_pill
