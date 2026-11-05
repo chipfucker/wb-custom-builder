@@ -20,6 +20,9 @@ with open(input_path / "config.toml", "rb") as file:
 with open(default_path / "lover/config.toml", "rb") as file:
   default = tomllib.load(file)
 
+global ini: ConfigParser
+global ase
+
 def stringify(value) -> str:
   match value:
     case str():
@@ -100,8 +103,17 @@ ini["stats"] = {
 
 output_ini("vanilla")
 
-ase = Sprite.open(input_path / filename("mating press.aseprite"))
-# CONTINUE
+ase = {
+  key: Sprite.open(input_path / filename(name + ".aseprite"))
+  for key, name in {
+    "portrait": "portrait",
+    "xray": "xray",
+    "mating_press": "mating press",
+    "reverse_cowgirl": "reverse cowgirl",
+    "deepthroat": "deepthroat",
+    "ball_clench": "ball clench"
+  }.items()
+}
 
 #region ---Deeproom---
 
