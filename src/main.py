@@ -4,7 +4,7 @@ from pathlib import Path
 import tomllib
 from configparser import ConfigParser
 from aseprite import Sprite
-from pillow import Image
+from PIL import Image
 
 DIR = Path(__file__).resolve().parent.parent
 FILENAME_SEPARATOR = "_"
@@ -20,8 +20,19 @@ with open(input_path / "config.toml", "rb") as file:
 with open(default_path / "lover/config.toml", "rb") as file:
   default = tomllib.load(file)
 
-global ini: ConfigParser
-global ase
+ase = {
+  key: Sprite.open(input_path / filename(name + ".aseprite"))
+  for key, name in {
+    "portrait": "portrait",
+    "xray": "xray",
+    "mating_press": "mating press",
+    "reverse_cowgirl": "reverse cowgirl",
+    "deepthroat": "deepthroat",
+    "ball_clench": "ball clench"
+  }.items()
+}
+
+global ini
 
 def stringify(value) -> str:
   match value:
@@ -50,18 +61,17 @@ def output_ini(key: str) -> None:
   with open(output_path / "custom_data.futa", "w") as output_file:
     ini.write(output_file)
 
+def hex_to_rgb(string: str) -> tuple[str, str, str]:
+  string = string.lstrip("#")
+  r, g, b = (str(int(string[i:i+2], 16)) for i in (0, 2, 4))
+  return (r, g, b)
+
 #region ---Vanilla---
 
 ini = ConfigParser(interpolation=None)
 
-cum_color = config["colors"]["cum"].lstrip("#")
-condom_color = config["colors"]["condom"].lstrip("#")
-cum_r, cum_g, cum_b = tuple(
-  str(int(cum_color[i:i+2], 16)) for i in (0, 2, 4)
-)
-condom_r, condom_g, condom_b = tuple(
-  str(int(condom_color[i:i+2], 16)) for i in (0, 2, 4)
-)
+cum_r, cum_g, cum_b = hex_to_rgb(config["colors"]["cum"])
+condom_r, condom_b, condom_g = hex_to_rgb(config["colors"]["condom"])
 
 ini["info"] = {
   "name": get("meta", "name"),
@@ -103,18 +113,6 @@ ini["stats"] = {
 
 output_ini("vanilla")
 
-ase = {
-  key: Sprite.open(input_path / filename(name + ".aseprite"))
-  for key, name in {
-    "portrait": "portrait",
-    "xray": "xray",
-    "mating_press": "mating press",
-    "reverse_cowgirl": "reverse cowgirl",
-    "deepthroat": "deepthroat",
-    "ball_clench": "ball clench"
-  }.items()
-}
-
 #region ---Deeproom---
 
 ini = ConfigParser(interpolation=None)
@@ -152,7 +150,7 @@ ini["penis"] = {
       if config["body"]["penis"][k]
   ))
 }
-PILLS = (
+ini["pills"] = {i+"_pill": get("pills", i) for i in (
   "contraceptive",
   "mega_sperm",
   "equine",
@@ -163,7 +161,6 @@ PILLS = (
   "stamina",
   "leaky",
   "hyper_breeding"
-)
-ini["pills"] = {i+"_pill": get("pills", i) for i in PILLS}
+)}
 
 output_ini("Deeproom")
