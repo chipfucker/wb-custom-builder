@@ -63,7 +63,7 @@ def output_ini(key: str) -> None:
 def hex_to_rgb(string: str) -> tuple[str, str, str]:
   string = string.lstrip("#")
   r, g, b = (str(int(string[i:i+2], 16)) for i in (0, 2, 4))
-  return (r, g, b)
+  return r, g, b
 
 #region ---Vanilla---
 
