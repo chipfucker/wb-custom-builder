@@ -55,8 +55,7 @@ def get(*path: *tuple[str, *tuple[str | int, ...]]) -> str:
     return dig(default, path)
 
 def output_ini(key: str) -> None:
-  output_path = (input_path / config["config"]["output_dir"][key]
-                ).resolve()
+  output_path = (input_path / config["config"]["output_dir"][key]).resolve()
   output_path.mkdir(parents=True, exist_ok=True)
   with open(output_path / "custom_data.futa", "w") as output_file:
     ini.write(output_file)
