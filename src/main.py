@@ -21,15 +21,15 @@ with open(default_path / "lover/config.toml", "rb") as file:
   default = tomllib.load(file)
 
 ase = {
-  key: Sprite.open(input_path / filename(name + ".aseprite"))
-  for key, name in {
-    "portrait": "portrait",
-    "xray": "xray",
-    "mating_press": "mating press",
-    "reverse_cowgirl": "reverse cowgirl",
-    "deepthroat": "deepthroat",
-    "ball_clench": "ball clench"
-  }.items()
+  name: Sprite.open(input_path / filename(name + ".aseprite"))
+  for name in (
+    "portrait",
+    "xray",
+    "mating press",
+    "reverse cowgirl",
+    "deepthroat",
+    "ball clench"
+  )
 }
 
 global ini
