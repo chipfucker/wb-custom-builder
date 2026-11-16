@@ -1,6 +1,8 @@
 INPUT_PATH = "./sample/lover/"
 
+from typing import Any, Callable
 from pathlib import Path
+from importlib import import_module
 import tomllib
 from configparser import ConfigParser
 from aseprite import Sprite
@@ -8,164 +10,84 @@ from PIL import Image
 
 DIR = Path(__file__).resolve().parent.parent
 
-def filename(name: str) -> str:
-  return "_".join(name.split(" "))
-
 input_path = DIR / INPUT_PATH
 default_path = DIR / "./src/default/"
 
 with open(input_path / "config.toml", "rb") as file:
-  config = tomllib.load(file)
+    config = tomllib.load(file)
 with open(default_path / "lover/config.toml", "rb") as file:
-  default = tomllib.load(file)
-  
+    default = tomllib.load(file)
+    
 def get_sprite(name) -> Path:
-  for ext in ("aseprite", "ase"):
-    path = Path(name + "." + ext)
-    if path.is_file():
-      return path
-  raise FileNotFoundError(f"No aseprite file found from '{name}'")
+    for ext in ("aseprite", "ase"):
+        path = Path(str(name) + "." + ext)
+        if path.is_file():
+            return path
+    
+    raise FileNotFoundError(f"No aseprite file found from '{name}'")
 
-ase = {
-  name: Sprite.open(get_sprite(input_path / name))
-  for name in (
-    "portrait",
-    "xray",
-    "mating press",
-    "reverse cowgirl",
-    "deepthroat",
-    "ball clench"
-  )
-}
+'''ase = {
+    name: Sprite.open(get_sprite(input_path / name))
+    for name in (
+        "portrait",
+        "xray",
+        "mating_press",
+        "reverse_cowgirl",
+        "deepthroat",
+        "ball_clench"
+    )
+}'''
 
 global ini
 
 def stringify(value) -> str:
-  match value:
-    case str():
-      return f'"{value.replace('"', '\\"')}"'
-    case bool():
-      return "1" if value else "0"
-    case _:
-      return str(value)
+    match value:
+        case str():
+            return f'"{value.replace('"', '\\"')}"'
+        case bool():
+            return "1" if value else "0"
+        case _:
+            return str(value)
 
 def dig(obj, path: str):
-  for i in path.split("."):
-    obj = obj[i]
-  return obj
+    for i in path.split("."):
+        obj = obj[i]
+    return obj
 
-def get(*path: *tuple[str, *tuple[str | int, ...]]) -> str:
-  try:
-    return stringify(dig(config, path))
-  except KeyError:
-    return stringify(dig(default, path))
+def get(path: str):
+    try:
+        return dig(config, path)
+    except KeyError:
+        return dig(default, path)
 
 def output_ini(key: str) -> None:
-  output_path = (input_path / config["config"]["output_dir"][key]).resolve()
-  output_path.mkdir(parents=True, exist_ok=True)
-  with open(output_path / "custom_data.futa", "w") as output_file:
-    ini.write(output_file)
+    output_path = (input_path / config["config"]["output_dir"][key]).resolve()
+    output_path.mkdir(parents=True, exist_ok=True)
+    with open(output_path / "custom_data.futa", "w") as output_file:
+        ini.write(output_file)
 
-def hex_to_rgb(string: str) -> tuple[str, str, str]:
-  string = string.lstrip("#")
-  r, g, b = (str(int(string[i:i+2], 16)) for i in (2, 4, 6))
-  return r, g, b
-
-#region ---Vanilla---
+#region -Vanilla
 
 ini = ConfigParser(interpolation=None)
 
-cum_r, cum_g, cum_b = hex_to_rgb(config["colors"]["cum"])
-condom_r, condom_b, condom_g = hex_to_rgb(config["colors"]["condom"])
-
-ini["info"] = {
-  "name": get("meta.name"),
-  "desc": get("meta.description"),
-  "author": get("meta.author")
-}
-ini["sprite"] = {
-  "origin_x": get("body.origin.overall.x"),
-  "origin_y": get("body.origin.overall.y"),
-  "condom_y": get("body.condom.origin_y"),
-  "standing_condom_y": get("body.condom.standing_offset_y"),
-  "xray_x": get("xray.origin.x"),
-  "xray_y": get("xray.origin.y"),
-  "bulge_width": get("body.scale.bulge.width"),
-  "bulge_height": get("body.scale.bulge.length"),
-  "heavy_boobs": get("body.boobs.heavy"),
-}
-ini["portrait"] = {
-  "origin_x": get("portrait.origin.x"),
-  "origin_y": get("portrait.origin.y"),
-  "head_offset": get("portrait.head_offset"),
-  "nipple_x": get("portrait.nipples.position.x"),
-  "nipple_y": get("portrait.nipples.position.y"),
-  "nipple_size": get("portrait.nipples.size")
-}
-ini["stats"] = {
-  "max_orgasms": get("stats.max_orgasms"),
-  "max_pumps": get("stats.max_pumps"),
-  "default_moans": "0" if config["meta"]["custom_moans"] else "1",
-  "cum_r": cum_r,
-  "cum_g": cum_g,
-  "cum_b": cum_b,
-  "condom_r": condom_r,
-  "condom_g": condom_g,
-  "condom_b": condom_b,
-  "lactate": get("body.boobs.lactating"),
-  "flat": get("body.boobs.flat")
-}
+mapping: dict[str, dict[str, Any]] = \
+    import_module("targets.wifes_bedroom.lover.config").to_config(get)
+for section in mapping:
+    ini[section] = {
+        key: stringify(value) for (key, value) in mapping[section].items()
+    }
 
 output_ini("vanilla")
 
-#region ---Deeproom---
+#region -Deeproom
 
 ini = ConfigParser(interpolation=None)
 
-ini["sprite"] = {
-  "origin_x": get("body.origin.overall.x"),
-  "origin_y": get("body.origin.overall.y"),
-  "cowgirl_origin_x": get("body.origin.cowgirl.x"),
-  "cowgirl_origin_y": get("body.origin.cowgirl.y")
-}
-ini["portrait"] = {
-  "origin_x": get("portrait.origin.x"),
-  "origin_y": get("portrait.origin.y")
-}
-ini["condom"] = {
-  "condom_y_mpress": get("body.condom.mating_press_offset_y"),
-  "condom_y_cowgirls": get("body.condom.cowgirl_offset_y")
-}
-ini["stats"] = {
-  "max_orgasms": get("stats.max_orgasms"),
-  "top_boob_size": get("body.scale.boobs"),
-  "top_ass_size": get("body.scale.ass"),
-  "top_penis_length": get("body.scale.penis.length"),
-  "top_penis_width": get("body.scale.penis.width"),
-  "ball_size": get("body.scale.balls"),
-  "virility_modifier": get("stats.virility"),
-  "cum_volume_modifier": get("stats.cum_volume"),
-  "stroke_depth": get("stats.thrust_strength"),
-  "stroke_speed": get("stats.thrust_speed"),
-  "pump_delay": str(config["stats"]["pump_delay"] * 60)
-}
-ini["penis"] = {
-  "penis_type_index": str(sum(
-    i for (k, i) in (("knotted", 1), ("equine", 2))
-      if config["body"]["penis"][k]
-  ))
-}
-ini["pills"] = {i+"_pill": get("pills", i) for i in (
-  "contraceptive",
-  "mega_sperm",
-  "equine",
-  "knotted",
-  "extra_thick",
-  "diphallia",
-  "ovulation",
-  "stamina",
-  "leaky",
-  "hyper_breeding"
-)}
+mapping: dict[str, dict[str, Any]] = \
+    import_module("targets.deeproom.lover.config").to_config(get)
+for section in mapping:
+    ini[section] = {
+        key: stringify(value) for (key, value) in mapping[section].items()
+    }
 
 output_ini("Deeproom")

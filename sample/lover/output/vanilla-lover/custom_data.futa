@@ -25,7 +25,7 @@ nipple_size = 1
 [stats]
 max_orgasms = 10
 max_pumps = 50
-default_moans = 0
+default_moans = 1
 cum_r = 255
 cum_g = 244
 cum_b = 205
