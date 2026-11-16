@@ -38,6 +38,8 @@ def get_sprite(name) -> Path:
     )
 }'''
 
+# print(list(l.name for l in sprite.layers if l.kind == 0))
+
 global ini
 
 def stringify(value) -> str:
