@@ -7,10 +7,9 @@ from aseprite import Sprite
 from PIL import Image
 
 DIR = Path(__file__).resolve().parent.parent
-FILENAME_SEPARATOR = "_"
 
 def filename(name: str) -> str:
-  return FILENAME_SEPARATOR.join(name.split(" "))
+  return "_".join(name.split(" "))
 
 input_path = DIR / INPUT_PATH
 default_path = DIR / "./src/default/"
@@ -19,9 +18,16 @@ with open(input_path / "config.toml", "rb") as file:
   config = tomllib.load(file)
 with open(default_path / "lover/config.toml", "rb") as file:
   default = tomllib.load(file)
+  
+def get_sprite(name) -> Path:
+  for ext in ("aseprite", "ase"):
+    path = Path(name + "." + ext)
+    if path.is_file():
+      return path
+  raise FileNotFoundError(f"No aseprite file found from '{name}'")
 
 ase = {
-  name: Sprite.open(input_path / filename(name + ".aseprite"))
+  name: Sprite.open(get_sprite(input_path / name))
   for name in (
     "portrait",
     "xray",
@@ -43,16 +49,16 @@ def stringify(value) -> str:
     case _:
       return str(value)
 
-def dig(obj, path: tuple[str | int, ...]):
-  for i in path:
+def dig(obj, path: str):
+  for i in path.split("."):
     obj = obj[i]
-  return stringify(obj)
+  return obj
 
 def get(*path: *tuple[str, *tuple[str | int, ...]]) -> str:
   try:
-    return dig(config, path)
+    return stringify(dig(config, path))
   except KeyError:
-    return dig(default, path)
+    return stringify(dig(default, path))
 
 def output_ini(key: str) -> None:
   output_path = (input_path / config["config"]["output_dir"][key]).resolve()
@@ -62,7 +68,7 @@ def output_ini(key: str) -> None:
 
 def hex_to_rgb(string: str) -> tuple[str, str, str]:
   string = string.lstrip("#")
-  r, g, b = (str(int(string[i:i+2], 16)) for i in (0, 2, 4))
+  r, g, b = (str(int(string[i:i+2], 16)) for i in (2, 4, 6))
   return r, g, b
 
 #region ---Vanilla---
@@ -73,32 +79,32 @@ cum_r, cum_g, cum_b = hex_to_rgb(config["colors"]["cum"])
 condom_r, condom_b, condom_g = hex_to_rgb(config["colors"]["condom"])
 
 ini["info"] = {
-  "name": get("meta", "name"),
-  "desc": get("meta", "description"),
-  "author": get("meta", "author")
+  "name": get("meta.name"),
+  "desc": get("meta.description"),
+  "author": get("meta.author")
 }
 ini["sprite"] = {
-  "origin_x": get("body", "origin", "overall", "x"),
-  "origin_y": get("body", "origin", "overall", "y"),
-  "condom_y": get("body", "condom", "origin_y"),
-  "standing_condom_y": get("body", "condom", "standing_offset_y"),
-  "xray_x": get("xray", "origin", "x"),
-  "xray_y": get("xray", "origin", "y"),
-  "bulge_width": get("body", "scale", "bulge", "width"),
-  "bulge_height": get("body", "scale", "bulge", "length"),
-  "heavy_boobs": get("body", "boobs", "heavy"),
+  "origin_x": get("body.origin.overall.x"),
+  "origin_y": get("body.origin.overall.y"),
+  "condom_y": get("body.condom.origin_y"),
+  "standing_condom_y": get("body.condom.standing_offset_y"),
+  "xray_x": get("xray.origin.x"),
+  "xray_y": get("xray.origin.y"),
+  "bulge_width": get("body.scale.bulge.width"),
+  "bulge_height": get("body.scale.bulge.length"),
+  "heavy_boobs": get("body.boobs.heavy"),
 }
 ini["portrait"] = {
-  "origin_x": get("portrait", "origin", "x"),
-  "origin_y": get("portrait", "origin", "y"),
-  "head_offset": get("portrait", "head_offset"),
-  "nipple_x": get("portrait", "nipples", "position", "x"),
-  "nipple_y": get("portrait", "nipples", "position", "y"),
-  "nipple_size": get("portrait", "nipples", "size")
+  "origin_x": get("portrait.origin.x"),
+  "origin_y": get("portrait.origin.y"),
+  "head_offset": get("portrait.head_offset"),
+  "nipple_x": get("portrait.nipples.position.x"),
+  "nipple_y": get("portrait.nipples.position.y"),
+  "nipple_size": get("portrait.nipples.size")
 }
 ini["stats"] = {
-  "max_orgasms": get("stats", "max_orgasms"),
-  "max_pumps": get("stats", "max_pumps"),
+  "max_orgasms": get("stats.max_orgasms"),
+  "max_pumps": get("stats.max_pumps"),
   "default_moans": "0" if config["meta"]["custom_moans"] else "1",
   "cum_r": cum_r,
   "cum_g": cum_g,
@@ -106,8 +112,8 @@ ini["stats"] = {
   "condom_r": condom_r,
   "condom_g": condom_g,
   "condom_b": condom_b,
-  "lactate": get("body", "boobs", "lactating"),
-  "flat": get("body", "boobs", "flat")
+  "lactate": get("body.boobs.lactating"),
+  "flat": get("body.boobs.flat")
 }
 
 output_ini("vanilla")
@@ -117,30 +123,30 @@ output_ini("vanilla")
 ini = ConfigParser(interpolation=None)
 
 ini["sprite"] = {
-  "origin_x": get("body", "origin", "overall", "x"),
-  "origin_y": get("body", "origin", "overall", "y"),
-  "cowgirl_origin_x": get("body", "origin", "cowgirl", "x"),
-  "cowgirl_origin_y": get("body", "origin", "cowgirl", "y")
+  "origin_x": get("body.origin.overall.x"),
+  "origin_y": get("body.origin.overall.y"),
+  "cowgirl_origin_x": get("body.origin.cowgirl.x"),
+  "cowgirl_origin_y": get("body.origin.cowgirl.y")
 }
 ini["portrait"] = {
-  "origin_x": get("portrait", "origin", "x"),
-  "origin_y": get("portrait", "origin", "y")
+  "origin_x": get("portrait.origin.x"),
+  "origin_y": get("portrait.origin.y")
 }
 ini["condom"] = {
-  "condom_y_mpress": get("body", "condom", "mating_press_offset_y"),
-  "condom_y_cowgirls": get("body", "condom", "cowgirl_offset_y")
+  "condom_y_mpress": get("body.condom.mating_press_offset_y"),
+  "condom_y_cowgirls": get("body.condom.cowgirl_offset_y")
 }
 ini["stats"] = {
-  "max_orgasms": get("stats", "max_orgasms"),
-  "top_boob_size": get("body", "scale", "boobs"),
-  "top_ass_size": get("body", "scale", "ass"),
-  "top_penis_length": get("body", "scale", "penis", "length"),
-  "top_penis_width": get("body", "scale", "penis", "width"),
-  "ball_size": get("body", "scale", "balls"),
-  "virility_modifier": get("stats", "virility"),
-  "cum_volume_modifier": get("stats", "cum_volume"),
-  "stroke_depth": get("stats", "thrust_strength"),
-  "stroke_speed": get("stats", "thrust_speed"),
+  "max_orgasms": get("stats.max_orgasms"),
+  "top_boob_size": get("body.scale.boobs"),
+  "top_ass_size": get("body.scale.ass"),
+  "top_penis_length": get("body.scale.penis.length"),
+  "top_penis_width": get("body.scale.penis.width"),
+  "ball_size": get("body.scale.balls"),
+  "virility_modifier": get("stats.virility"),
+  "cum_volume_modifier": get("stats.cum_volume"),
+  "stroke_depth": get("stats.thrust_strength"),
+  "stroke_speed": get("stats.thrust_speed"),
   "pump_delay": str(config["stats"]["pump_delay"] * 60)
 }
 ini["penis"] = {

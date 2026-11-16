@@ -1,0 +1,7 @@
+[mating_press]
+output_main = "mating_press.png"
+output_alts = "mating_press_alt_{i}.png"
+layers = [
+  "boobs",
+  # ...
+]
