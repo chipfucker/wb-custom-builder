@@ -1,17 +1,17 @@
-[custom_condom.png]
+["custom_condom.png"]
 alt_dest = "custom_condom_alt_{i}.png"  # ?
 sheet = [
   "mating_press#condom",
   "reverse_cowgirl#condom",
 ]
 
-[custom_condom_broken.png]
+["custom_condom_broken.png"]
 sheet = [
   "mating_press#condom_ripped",
   "reverse_cowgirl#condom_ripped",
 ]
 
-[custom_deepthroat.png]
+["custom_deepthroat.png"]
 layers = [
   "deepthroat#boobs",
   "deepthroat#head",
@@ -24,7 +24,7 @@ layers = [
   "deepthroat#balls",
 ]
 
-[custom_eyes.png]
+["custom_eyes.png"]
 layers = [
   "portrait#eyes",
   "portrait#eyes_blink",
@@ -32,7 +32,7 @@ layers = [
   "portrait#blush"
 ]
 
-[custom_mating_press.png]
+["custom_mating_press.png"]
 layers = [
   "mating_press#boobs",
   "mating_press#head",
@@ -45,7 +45,7 @@ layers = [
   "mating_press#balls",
 ]
 
-[custom_mouth.png]
+["custom_mouth.png"]
 layers = [
   "portrait#mouth_closed",
   "portrait#mouth_ah",
@@ -56,7 +56,7 @@ layers = [
   "portrait#mouth_kiss",
 ]
 
-[custom_portrait.png]
+["custom_portrait.png"]
 layers = [
   "portrait#back_hair",
   "portrait#torso",
@@ -70,7 +70,7 @@ layers = [
   "portrait#bangs",
 ]
 
-[custom_reverse_cowgirl.png]
+["custom_reverse_cowgirl.png"]
 layers = [
   "reverse_cowgirl#upper_body",
   "reverse_cowgirl#lower_body",
@@ -79,7 +79,7 @@ layers = [
   "reverse_cowgirl#hands",
 ]
 
-[custom_sperm.png]
+["custom_sperm.png"]
 layers = [
   "sperm#1",
   "sperm#2",
@@ -87,14 +87,14 @@ layers = [
   "sperm#4",
 ]
 
-[custom_xray.png]
+["custom_xray.png"]
 layers = [
   "xray#penis",
   "xray#urethra",
   "xray#condom"
 ]
 
-[custom_xray_broken.png]
+["custom_xray_broken.png"]
 layers = [
   "xray#condom_broken"
 ]

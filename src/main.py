@@ -5,8 +5,8 @@ from pathlib import Path
 from importlib import import_module
 import tomllib
 from configparser import ConfigParser
-from aseprite import Sprite
-from PIL import Image
+# from aseprite import Sprite
+# from PIL import Image
 
 DIR = Path(__file__).resolve().parent.parent
 
@@ -25,18 +25,6 @@ def get_sprite(name) -> Path:
             return path
     
     raise FileNotFoundError(f"No aseprite file found from '{name}'")
-
-'''ase = {
-    name: Sprite.open(get_sprite(input_path / name))
-    for name in (
-        "portrait",
-        "xray",
-        "mating_press",
-        "reverse_cowgirl",
-        "deepthroat",
-        "ball_clench"
-    )
-}'''
 
 # print(list(l.name for l in sprite.layers if l.kind == 0))
 
@@ -62,34 +50,22 @@ def get(path: str):
     except KeyError:
         return dig(default, path)
 
-def output_ini(key: str) -> None:
+def output_ini(ini: ConfigParser, key: str) -> None:
     output_path = (input_path / config["config"]["output_dir"][key]).resolve()
     output_path.mkdir(parents=True, exist_ok=True)
     with open(output_path / "custom_data.futa", "w") as output_file:
         ini.write(output_file)
 
-#region -Vanilla
+targets = DIR / "src/targets"
 
-ini = ConfigParser(interpolation=None)
-
-mapping: dict[str, dict[str, Any]] = \
-    import_module("targets.wifes_bedroom.lover.config").to_config(get)
-for section in mapping:
-    ini[section] = {
-        key: stringify(value) for (key, value) in mapping[section].items()
-    }
-
-output_ini("vanilla")
-
-#region -Deeproom
-
-ini = ConfigParser(interpolation=None)
-
-mapping: dict[str, dict[str, Any]] = \
-    import_module("targets.deeproom.lover.config").to_config(get)
-for section in mapping:
-    ini[section] = {
-        key: stringify(value) for (key, value) in mapping[section].items()
-    }
-
-output_ini("Deeproom")
+for path in targets.glob("*/*/"):
+    *_, target, char = path.parts
+    ini = ConfigParser(interpolation=None)
+    mapping: dict[str, dict[str, Any]] = \
+        import_module(f"targets.{target}.{char}.to_config").to_config(get)
+    for section in mapping:
+        ini[section] = {
+            key: stringify(value) for (key, value) in mapping[section].items()
+        }
+    
+    output_ini(ini, target)
